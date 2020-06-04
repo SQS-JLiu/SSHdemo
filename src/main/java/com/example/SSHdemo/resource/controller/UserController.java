@@ -5,6 +5,7 @@ import com.example.SSHdemo.resource.entity.User;
 import com.example.SSHdemo.resource.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,7 @@ public class UserController {
 
     @GetMapping("/getAllById")  // 127.0.0.1:8080/user/getAllById
     @ResponseBody
+    @PreAuthorize("hasRole('ROLE_ADMIN')") //权限格式为ROLE_XXX，是Spring Security规定的，不要乱起名字
     public List<User> getUserPage(@RequestParam(value = "userId",required = false,defaultValue = "0") Integer userId,
                                   @RequestParam(value = "currentPage", required = false,defaultValue = "1") Integer currentPage,
                                   @RequestParam(value = "pageSize",required = false,defaultValue = "2") Integer pageSize){
